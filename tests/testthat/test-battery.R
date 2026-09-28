@@ -29,3 +29,12 @@ test_that("optional tests run when skedastic is installed", {
   b <- run.all.het(dist ~ speed, data = cars)
   expect_equal(nrow(b), 9)
 })
+
+test_that("run.all.het leaves the user's random numbers alone", {
+  skip_on_cran()
+  skip_if_not_installed("skedastic")
+  # skedastic::zhou_etal() calls set.seed() internally; the battery must undo it
+  set.seed(7); a <- runif(1)
+  set.seed(7); invisible(run.all.het(dist ~ speed, data = cars)); b <- runif(1)
+  expect_equal(a, b)
+})

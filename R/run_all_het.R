@@ -124,11 +124,13 @@ run.all.het <- function(x, data = NULL, order.by = NULL, alpha = 0.75,
     if (requireNamespace("skedastic", quietly = TRUE)) {
       Zd <- as.data.frame(Z); names(Zd) <- paste0("x", seq_len(ncol(Z)))   # safe names
       m0 <- stats::lm(y ~ ., data = cbind(y = y, Zd))
-      sk <- function(fun, ...) {
+      # some 'skedastic' functions (zhou_etal, bamset) call set.seed() internally;
+      # .with_seed() restores the caller's random-number state afterwards
+      sk <- function(fun, ...) .with_seed(seed, {
         h <- suppressWarnings(fun(m0, ...))
         list(stat = h$statistic, df = "", p = h$p.value)
-      }
-      add("Wilcox-Keselman (2006)", "Robust", .with_seed(seed, sk(skedastic::wilcox_keselman)))
+      })
+      add("Wilcox-Keselman (2006)", "Robust", sk(skedastic::wilcox_keselman))
       add("Zhou-Song-Thompson (2015)", "Recent", sk(skedastic::zhou_etal, method = "pooled", seed = seed))
       add("Li-Yao (2019)", "Recent", sk(skedastic::li_yao, method = "cvt"))
     } else {
