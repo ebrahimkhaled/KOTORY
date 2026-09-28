@@ -82,6 +82,14 @@ test_that("strong heteroscedasticity is detected", {
   expect_lt(kah.robust.test(y ~ x1, data = d)$p.value, 0.01)
 })
 
+test_that("repeated regressor values (grouped design) work", {
+  # Pindyck-Rubinfeld housing data: x takes 4 values, 5 times each
+  x <- rep(c(5, 10, 15, 20), each = 5)
+  y <- c(1.8, 2, 2, 2, 2.1, 3.1, 3.2, 3.5, 3.5, 3.6, 4.2, 4.2, 4.5, 4.8, 5, 4.8, 5, 5.7, 6, 6.2)
+  h <- kah.robust.test(y ~ x)
+  expect_true(is.finite(h$statistic) && h$p.value >= 0 && h$p.value <= 1)
+})
+
 test_that("input checks", {
   d <- sim_data(12, 3)
   expect_error(kah.robust.test(y ~ x1 + x2 + x3, data = d), "at least")

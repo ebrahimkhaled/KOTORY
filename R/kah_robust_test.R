@@ -113,17 +113,27 @@ kah.robust.test <- function(x, data = NULL, order.by = NULL, alpha = 0.75,
       ref <- sprintf("Fmax(3, %.2f) reference for the squared ratio", nus)
     } else {
       Zs <- Z
-      sim <- function(e) { s <- .lts3(Zs, e, alpha)$scale; max(s) / min(s) }
+      # a resample whose LTS fit is degenerate in some third (possible with few distinct
+      # regressor values and many exactly fitted points) is skipped and counted
+      sim <- function(e) tryCatch({ s <- .lts3(Zs, e, alpha)$scale; max(s) / min(s) },
+                                  error = function(err) NA_real_)
       Tb <- if (method == "mc") {
         replicate(B, sim(stats::rnorm(n)))
       } else {
         r <- L$resid[is.finite(L$resid)]
         replicate(B, sim(sample(r, n, replace = TRUE)))
       }
-      pval <- (1 + sum(Tb >= stat)) / (B + 1)
+      skipped <- sum(!is.finite(Tb))
+      Tb <- Tb[is.finite(Tb)]
+      if (skipped > 0.1 * B)
+        warning(sprintf("%d of %d resamples gave a degenerate LTS fit and were skipped; the reference may be unreliable.",
+                        skipped, B), call. = FALSE)
+      Bv <- length(Tb)
+      pval <- (1 + sum(Tb >= stat)) / (Bv + 1)
       crit <- stats::quantile(Tb, 1 - levels, names = FALSE, type = 8)
       nus <- NA_real_
-      ref <- sprintf("%s reference, B = %d", if (method == "mc") "Monte Carlo" else "residual bootstrap", B)
+      ref <- sprintf("%s reference, B = %d%s", if (method == "mc") "Monte Carlo" else "residual bootstrap", Bv,
+                     if (skipped) sprintf(" (%d degenerate resamples skipped)", skipped) else "")
     }
   })
 

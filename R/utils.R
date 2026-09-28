@@ -66,9 +66,18 @@
   expr
 }
 
-# Raw LTS scale and standardized raw residuals of one part.
+# Raw LTS scale and standardized raw residuals of one part. Small parts are searched
+# exhaustively (all elemental subsets), which is deterministic and also succeeds when
+# repeated regressor values leave few non-singular random subsets.
 .lts_part <- function(Z, y, alpha) {
-  fit <- robustbase::ltsReg(x = Z, y = y, intercept = TRUE, alpha = alpha, mcd = FALSE)
+  m <- length(y)
+  nsamp <- if (choose(m, ncol(Z) + 1) <= 3000) "exact" else 500
+  fit <- tryCatch(
+    robustbase::ltsReg(x = Z, y = y, intercept = TRUE, alpha = alpha, mcd = FALSE, nsamp = nsamp),
+    error = function(e) stop(sprintf(paste0(
+      "The LTS fit failed in a third of the data with %d observations (%s). ",
+      "This usually means the regressors take too few distinct values within that third."),
+      m, conditionMessage(e)), call. = FALSE))
   r <- drop(y - cbind(1, Z) %*% fit$raw.coefficients) / fit$raw.scale
   list(scale = fit$raw.scale, resid = r)
 }
