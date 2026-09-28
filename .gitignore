@@ -5,3 +5,4 @@ KOTORY.Rcheck/
 *.tar.gz
 data-raw/nu_cells/
 check_*.out
+data-raw/nu_table_log.txt
