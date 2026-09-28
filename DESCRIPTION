@@ -6,7 +6,8 @@ Date: 2026-09-28
 Authors@R: c(
     person(given = "Ahmed", family = "El-Kotory",
            email = "ahmed.elkatory@alexu.edu.eg",
-           role = "aut"),
+           role = "aut",
+           comment = c(ORCID = "0009-0000-1485-0768")),
     person(given = "Ebrahim Khaled", family = "Ebrahim",
            email = "ebrahimkhaled@alexu.edu.eg",
            role = c("aut", "cre"),
