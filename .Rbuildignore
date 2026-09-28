@@ -1,0 +1,12 @@
+^\.github$
+^\.git$
+^cran-comments\.md$
+^.*\.Rproj$
+^\.Rproj\.user$
+^\.Rhistory$
+^CRAN-SUBMISSION$
+^check_.*\.out$
+^KOTORY_.*\.tar\.gz$
+^KOTORY\.Rcheck$
+^data-raw$
+^README\.Rmd$

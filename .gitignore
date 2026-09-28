@@ -1,0 +1,7 @@
+.Rproj.user
+.Rhistory
+.RData
+KOTORY.Rcheck/
+*.tar.gz
+data-raw/nu_cells/
+check_*.out
