@@ -1,0 +1,39 @@
+{
+  "title": "KOTORY: Robust Three-Group Tests for Heteroscedasticity in Linear Regression",
+  "version": "0.1.0",
+  "upload_type": "software",
+  "description": "<p>R package implementing two tests for heteroscedasticity in linear regression. The observations are sorted by a regressor or by any other variable (for example time) and split into three equal parts; the regression is fitted separately in each part, and the statistic is the ratio of the largest to the smallest error scale.</p><ul><li><code>kah3.test()</code>: least squares fits; the statistic follows Hartley's maximum F distribution with three groups exactly, so p-values and critical values come from one numerical integral.</li><li><code>kah.robust.test()</code>: least trimmed squares fits; resists outliers, with an effective-degrees-of-freedom maximum F reference (default), a Monte Carlo reference, or a residual bootstrap for non-normal errors.</li><li><code>run.all.het()</code>: runs both tests next to the Goldfeld&ndash;Quandt, Breusch&ndash;Pagan, White and modified Goldfeld&ndash;Quandt tests.</li><li><code>pfmax()</code>, <code>dfmax()</code>, <code>qfmax()</code>, <code>rfmax()</code>: Hartley's maximum F distribution for any number of groups and any positive degrees of freedom.</li></ul>",
+  "creators": [
+    {
+      "name": "El-Kotory, Ahmed",
+      "affiliation": "Department of Applied Statistics, Faculty of Business, Alexandria University",
+      "orcid": "0009-0000-1485-0768"
+    },
+    {
+      "name": "Ebrahim, Ebrahim Khaled",
+      "affiliation": "Department of Applied Statistics, Faculty of Business, Alexandria University",
+      "orcid": "0009-0006-7839-8778"
+    }
+  ],
+  "license": "gpl-3.0-only",
+  "access_right": "open",
+  "keywords": [
+    "heteroscedasticity",
+    "Goldfeld-Quandt test",
+    "Hartley's test",
+    "least trimmed squares",
+    "robust test",
+    "outliers",
+    "linear regression",
+    "R package"
+  ],
+  "language": "eng",
+  "related_identifiers": [
+    {
+      "identifier": "https://CRAN.R-project.org/package=KOTORY",
+      "relation": "isIdenticalTo",
+      "scheme": "url",
+      "resource_type": "software"
+    }
+  ]
+}

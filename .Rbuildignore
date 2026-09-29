@@ -10,3 +10,4 @@
 ^KOTORY\.Rcheck$
 ^data-raw$
 ^README\.Rmd$
+^\.zenodo\.json$
